@@ -10,8 +10,8 @@ patch_dir="$main_directory/data/patch"
 patch_abs_dir="$main_directory/data/patch/abs"
 patch_contact_dir="$main_directory/data/patch/contact"
 patch_psaia_dir="$main_directory/data/patch/psaia"
-Qcontact_dir="$main_directory/Qcontacts"
-naccess_dir="$main_directory/naccess2.1.1"
+Qcontact_dir="$main_directory/Program/Qcontacts"
+naccess_dir="$main_directory/Program/naccess2.1.1"
 #create directory: workspace
 
 #create subdirectories
