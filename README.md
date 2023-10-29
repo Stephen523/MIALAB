@@ -9,6 +9,7 @@ This program needs pdb-format files of proteins, you can download them from [RCS
 # Necessary Program
 
 This program needs Naccess, you can download it if from http://www.bioinf.manchester.ac.uk/naccess/ and then put the directory named naccess2.1.1 in Program/.
+
 To use Qcontacts in Program/, you also need to install the corresponding dependencies : sudo apt-get install ia32-libs or sudo apt-get install lib32ncurses5. After this, run the following order:
 
 ```
