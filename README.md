@@ -2,13 +2,21 @@
 
 This is a program to calculate PSAIA of proteins and then predict the batch of possible binding sites of proteins.
 
-# Necessary Program
-
-This program needs Naccess, you can download it if from http://www.bioinf.manchester.ac.uk/naccess/ and then put the directory named naccess2.1.1 in Program/.
-
 # Data
 
 This program needs pdb-format files of proteins, you can download them from [RCSB PDB: Homepage](https://www.rcsb.org/).
+
+# Necessary Program
+
+This program needs Naccess, you can download it if from http://www.bioinf.manchester.ac.uk/naccess/ and then put the directory named naccess2.1.1 in Program/.
+To use Qcontacts in Program/, you also need to install the corresponding dependencies : sudo apt-get install ia32-libs or sudo apt-get install lib32ncurses5. After this, run the following order:
+
+```
+cd Program/Qcontacts
+ldd Qcontacts
+```
+
+If you can see its dependencies, you can go on . If not, you need to check if the versions of the relevant libraries are correct.
 
 # Run
 
