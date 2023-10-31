@@ -13,7 +13,7 @@ This program needs Naccess, you can download it if from http://www.bioinf.manche
 To use Qcontacts in Program/, you need to install the corresponding dependencies : 
 
 ```
-sudo apt-get install ia32-libs
+sudo apt-get install lib32z1
 ```
 
 or 
