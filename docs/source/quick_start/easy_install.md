@@ -1,27 +1,33 @@
 # Easy Installation
 
-This guide helps you install ABACUS with basic features. **For DeePKS, DeePMD and Libxc support, or building with `make`, please refer to [the advanced installation guide](../advanced/install.md)** after going through this page. We recommend building ABACUS with `cmake` to avoid dependency issues. We recommend compiling ABACUS(and possibly its requirements) from the source code using the latest compiler for the best performace. You can also deploy ABACUS **without building** by [Docker](#container-deployment) or [conda](#install-by-conda). Please note that ABACUS only supports Linux; for Windows users, please consider using [WSL](https://learn.microsoft.com/en-us/windows/wsl/) or docker.
+This guide helps you install PSAIA with basic features.  We recommend building PSAIA with [Docker](#container-deployment) to avoid dependency issues. We recommend compiling PSAIA(and possibly its requirements) from the source code using the latest compiler for the best performace. You can also deploy ABACUS **without building** by [Docker](#container-deployment) . Please note that PSAIA only supports Linux; for Windows users, please consider using [WSL](https://learn.microsoft.com/en-us/windows/wsl/) or docker.
 
 ## Prerequisites
 
-To compile ABACUS, please make sure that the following prerequisites are present:
+To compile PSAIA, please make sure that the following prerequisites are present:
 
-- [CMake](https://cmake.org/) >= 3.16 .
-- C++ compiler, supporting C++11. You can use [Intel® C++ compiler](https://software.intel.com/enus/c-compilers) or [GCC](https://gcc.gnu.org/).
+This program needs Naccess, you can download it if from http://www.bioinf.manchester.ac.uk/naccess/ and then put the directory named naccess2.1.1 in Program/.
 
-> GCC version 5 or later is always required. Intel compilers also use GCC headers and libraries[(ref)](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compatibility-and-portability/gcc-compatibility-and-interoperability.html#gcc-compatibility-and-interoperability_GUID-52CB6FE0-83DA-4028-9EF4-0DFAF1652736).
+To use Qcontacts in Program/, you need to install the corresponding dependencies : 
 
-- MPI library. The recommended versions are [Intel MPI](https://software.intel.com/enus/mpi-library), [MPICH](https://www.mpich.org/) or [Open MPI](https://www.open-mpi.org/).
-- Fortran compiler if you are building `BLAS`, `LAPACK`, `ScaLAPACK`, and `ELPA` from source file. You can use [Intel® Fortran Compiler](https://www.intel.com/content/www/us/en/developer/tools/oneapi/fortran-compiler.html) or [GFortran](https://gcc.gnu.org/fortran/).
-- [BLAS](http://www.netlib.org/blas/). You can use [OpenBLAS](https://www.openblas.net/).
-- [LAPACK](http://www.netlib.org/lapack/).
-- [FFTW3](http://www.fftw.org/).
+```
+sudo apt-get install lib32z1
+```
 
-These requirements support the calculation of plane-wave basis in ABACUS. For LCAO basis calculation, additional components are required:
+or 
 
-- [ScaLAPACK](http://www.netlib.org/scalapack/).
-- [CEREAL](https://uscilab.github.io/cereal/).
-- [ELPA](https://elpa.mpcdf.mpg.de/) >= 2017 (optional).
+```
+sudo apt-get install lib32ncurses5
+```
+
+After this, run the following order:
+
+```
+cd Program/Qcontacts
+ldd Qcontacts
+```
+
+If you can see its dependencies, you can go on . If not, you need to check if the versions of the relevant libraries are correct.
 
 ## Install requirements
 
@@ -39,28 +45,14 @@ We recommend [Intel® oneAPI toolkit](https://software.intel.com/content/www/us/
 
 Please refer to our [guide](https://github.com/deepmodeling/abacus-develop/wiki/Building-and-Running-ABACUS) on installing requirements.
 
-## Install requirements by toolchain
 
-We offer a set of [toolchain](https://github.com/deepmodeling/abacus-develop/tree/develop/toolchain) 
-scripts to compile and install all the requirements
-automatically and suitable for machine characteristic in an online or offline way. 
-The toolchain can be downloaded with ABACUS repo, which is easily used and can 
-have a convenient installation under HPC environment in both `GNU` or `Intel-oneAPI` toolchain.
-Sometimes, ABACUS by toolchain installation may have highly efficient performance.
-A Tutorial for using this toolchain can be accessed in [bohrium-notebook](https://nb.bohrium.dp.tech/detail/5215742477)
+## Get PSAIA source code
 
-> Notice: the toolchain is under development, please let me know if you encounter any problem in using this toolchain.
+Of course a copy of PSAIA source code is required, which can be obtained via one of the following choices:
 
-
-## Get ABACUS source code
-
-Of course a copy of ABACUS source code is required, which can be obtained via one of the following choices:
-
-- Clone the whole repo with git: `git clone https://github.com/deepmodeling/abacus-develop.git`
-- Clone the minimum required part of repo: `git clone https://github.com/deepmodeling/abacus-develop.git --depth=1`
-- Download the latest source code without git: `wget https://github.com/deepmodeling/abacus-develop/archive/refs/heads/develop.zip`
-- Get the source code of a stable version [here](https://github.com/deepmodeling/abacus-develop/releases)
-- If you have connection issues accessing GitHub, please try out our official [Gitee repo](https://gitee.com/deepmodeling/abacus-develop/): e.g. `git clone https://gitee.com/deepmodeling/abacus-develop.git`
+- Clone the whole repo with git: `git clone https://github.com/Stephen523/MIALAB.git
+- Clone the minimum required part of repo: `git clone https://github.com/Stephen523/MIALAB.git --depth=1`
+- Get the source code of a stable version from [here](https://github.com/Stephen523/MIALAB)
 
 ### Update to latest release
 
