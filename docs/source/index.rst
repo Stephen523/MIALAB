@@ -13,27 +13,18 @@ PSAIA is a program to calculate PSAIA score of proteins and then predict the bat
    :maxdepth: 2
    :caption: Quick Start:
 
-   quick_start/easy_install
-   quick_start/hands_on
-   quick_start/input
+   quick_start/easy_install_PSAIA
+   quick_start/hands_on_PSAIA
 
 .. toctree::
    :maxdepth: 2
    :caption: Advanced
 
    advanced/install
-   advanced/scf/index
-   advanced/pp_orb
-   advanced/opt
-   advanced/md
-   advanced/acceleration/index
-   advanced/elec_properties/index
-   advanced/interface/index
-   advanced/input_files/index
 
 .. toctree::
    :maxdepth: 2
-   :caption: Citing ABACUS
+   :caption: Citing PSAIA
 
    CITATIONS
 
