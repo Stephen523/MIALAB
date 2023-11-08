@@ -10,6 +10,15 @@ This program needs pdb-format files of proteins, you can download them from [RCS
 
 This program needs Naccess, you can download it if from http://www.bioinf.manchester.ac.uk/naccess/ and then put the directory named naccess2.1.1 in Program/.
 
+If you already have the Naccess , please perform the following operations :
+
+```
+sudo apt-get install csh
+cd Program/naccess2.1.1/
+csh install.scr
+cd ../../
+```
+
 To use Qcontacts in Program/, you need to install the corresponding dependencies : 
 
 ```
