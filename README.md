@@ -1,6 +1,6 @@
 # Introduction
 
-This is a program to calculate PSAIA of proteins and then predict the batch of possible binding sites of proteins.
+This is a program to calculate PSAIA of proteins and then give a series of residue patchs which may contain possible binding sites of proteins.
 
 # Data
 

@@ -1,239 +1,491 @@
-# Two Quick Examples
+# A Quick Example
 
-## Running SCF Calculation
+## Calculating PSAIA
 
-### A quick LCAO example
 
-ABACUS is well known for its support of LCAO (Linear Combination of Atomic Orbital) basis set in calculating periodic condensed matter systems, so it's a good choice to start from a LCAO example of self-consistent field (SCF) calculation. Here, FCC MgO has been chosen as a quick start example. The default name of a structure file in ABACUS is `STRU`. The `STRU` file for FCC MgO in a LCAO calculation is shown below:
 
-```
-#This is the atom file containing all the information
-#about the lattice structure.
+In order to quickly get started with the PSAIA program, I will demonstrate the entire process using the 1acb.pdb file in data/pdb/ directory as input.
 
-ATOMIC_SPECIES
-Mg 24.305  Mg_ONCV_PBE-1.0.upf  # element name, atomic mass, pseudopotential file
-O  15.999 O_ONCV_PBE-1.0.upf
-
-NUMERICAL_ORBITAL
-Mg_gga_8au_100Ry_4s2p1d.orb
-O_gga_8au_100Ry_2s2p1d.orb
-
-LATTICE_CONSTANT
-1.8897259886 		# 1.8897259886 Bohr =  1.0 Angstrom
-
-LATTICE_VECTORS
-4.25648 0.00000 0.00000  
-0.00000 4.25648 0.00000
-0.00000 0.00000 4.25648
-
-ATOMIC_POSITIONS
-Direct                  #Cartesian(Unit is LATTICE_CONSTANT)
-Mg                      #Name of element        
-0.0                     #Magnetic for this element.
-4                       #Number of atoms
-0.0  0.0  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-0.0  0.5  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.5  0.0  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.5  0.5  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-O                       #Name of element        
-0.0                     #Magnetic for this element.
-4                       #Number of atoms
-0.5  0.0  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-0.5  0.5  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.0  0.0  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.0  0.5  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-```
-
-Next, the `INPUT` file is required, which sets all key parameters to direct ABACUS how to calculte and what to output:
-```
-INPUT_PARAMETERS
-suffix                  MgO
-ntype                   2
-pseudo_dir              ./
-orbital_dir		./
-ecutwfc                 100             # Rydberg
-scf_thr                 1e-4		# Rydberg
-basis_type              lcao            
-calculation             scf		# this is the key parameter telling abacus to do a scf calculation
-```
-
-The pseudopotential files of `Mg_ONCV_PBE-1.0.upf` and `O_ONCV_PBE-1.0.upf` should be provided under the directory of `pseudo_dir`, and the orbital files `Mg_gga_8au_100Ry_4s2p1d.orb` and `O_gga_8au_100Ry_2s2p1d.orb` under the directory of `orbital_dir`. The pseudopotential and orbital files can be downloaded from the [ABACUS website](http://abacus.ustc.edu.cn/pseudo/list.htm).
-
-The final mandatory input file is called `KPT`, which sets the reciprocal space k-mesh. Below is an example:
+You only need to run the following order:
 
 ```
-K_POINTS
-0 
-Gamma
-4 4 4 0 0 0
+bash main.sh
 ```
 
-After all the above input files have been set, one should be able to run the first quick example. The simplest way is to use the command line, e.g.:
+Then, you will get the results in the folder: /result/1acb_result.txt
 
 ```
-mpirun -np 2 abacus
+chain  E: 
+patch1
+res: 85 ILE E   CENTER res: 85 ILE E
+res: 64 ASP E   CENTER res: 85 ILE E
+res: 84 LYS E   CENTER res: 85 ILE E
+res: 62 THR E   CENTER res: 85 ILE E
+res: 109 SER E   CENTER res: 85 ILE E
+res: 108 LEU E   CENTER res: 85 ILE E
+res: 107 LYS E   CENTER res: 85 ILE E
+res: 86 ALA E   CENTER res: 85 ILE E
+res: 87 LYS E   CENTER res: 85 ILE E
+res: 61 THR E   CENTER res: 85 ILE E
+res: 65 VAL E   CENTER res: 85 ILE E
+res: 106 LEU E   CENTER res: 85 ILE E
+res: 83 LEU E   CENTER res: 85 ILE E
+res: 66 VAL E   CENTER res: 85 ILE E
+res: 60 VAL E   CENTER res: 85 ILE E
+res: 88 VAL E   CENTER res: 85 ILE E
+res: 33 LEU E   CENTER res: 85 ILE E
+patch2
+res: 108 LEU E   CENTER res: 108 LEU E
+res: 106 LEU E   CENTER res: 108 LEU E
+res: 50 ASN E   CENTER res: 108 LEU E
+res: 107 LYS E   CENTER res: 108 LEU E
+res: 85 ILE E   CENTER res: 108 LEU E
+res: 84 LYS E   CENTER res: 108 LEU E
+res: 109 SER E   CENTER res: 108 LEU E
+res: 86 ALA E   CENTER res: 108 LEU E
+res: 110 THR E   CENTER res: 108 LEU E
+res: 111 ALA E   CENTER res: 108 LEU E
+res: 83 LEU E   CENTER res: 108 LEU E
+res: 49 GLU E   CENTER res: 108 LEU E
+res: 52 VAL E   CENTER res: 108 LEU E
+res: 51 TRP E   CENTER res: 108 LEU E
+res: 66 VAL E   CENTER res: 108 LEU E
+res: 46 LEU E   CENTER res: 108 LEU E
+res: 112 ALA E   CENTER res: 108 LEU E
+patch3
+res: 177 LYS E   CENTER res: 180 MET E
+res: 180 MET E   CENTER res: 180 MET E
+res: 230 ARG E   CENTER res: 180 MET E
+res: 179 ALA E   CENTER res: 180 MET E
+res: 178 ASP E   CENTER res: 180 MET E
+res: 228 TYR E   CENTER res: 180 MET E
+res: 181 ILE E   CENTER res: 180 MET E
+res: 229 ALA E   CENTER res: 180 MET E
+res: 182 CYS E   CENTER res: 180 MET E
+res: 176 ILE E   CENTER res: 180 MET E
+res: 165 ASN E   CENTER res: 180 MET E
+res: 227 VAL E   CENTER res: 180 MET E
+res: 215 TRP E   CENTER res: 180 MET E
+res: 101 ASN E   CENTER res: 180 MET E
+res: 100 ASN E   CENTER res: 180 MET E
+res: 99 ILE E   CENTER res: 180 MET E
+res: 175 LYS E   CENTER res: 180 MET E
+res: 98 THR E   CENTER res: 180 MET E
+patch4
+res: 194 ASP E   CENTER res: 141 TRP E
+res: 193 GLY E   CENTER res: 141 TRP E
+res: 142 GLY E   CENTER res: 141 TRP E
+res: 141 TRP E   CENTER res: 141 TRP E
+res: 140 GLY E   CENTER res: 141 TRP E
+res: 40 HIS E   CENTER res: 141 TRP E
+res: 155 LEU E   CENTER res: 141 TRP E
+res: 30 GLN E   CENTER res: 141 TRP E
+res: 152 PRO E   CENTER res: 141 TRP E
+res: 156 GLN E   CENTER res: 141 TRP E
+res: 154 ARG E   CENTER res: 141 TRP E
+res: 151 THR E   CENTER res: 141 TRP E
+res: 143 LEU E   CENTER res: 141 TRP E
+res: 73 GLN E   CENTER res: 141 TRP E
+res: 153 ASP E   CENTER res: 141 TRP E
+res: 70 GLU E   CENTER res: 141 TRP E
+res: 71 PHE E   CENTER res: 141 TRP E
+res: 72 ASP E   CENTER res: 141 TRP E
+res: 43 GLY E   CENTER res: 141 TRP E
+res: 31 VAL E   CENTER res: 141 TRP E
+res: 32 SER E   CENTER res: 141 TRP E
+res: 67 VAL E   CENTER res: 141 TRP E
+patch5
+res: 234 LEU E   CENTER res: 237 TRP E
+res: 237 TRP E   CENTER res: 237 TRP E
+res: 236 ASN E   CENTER res: 237 TRP E
+res: 235 VAL E   CENTER res: 237 TRP E
+res: 238 VAL E   CENTER res: 237 TRP E
+res: 240 GLN E   CENTER res: 237 TRP E
+res: 239 GLN E   CENTER res: 237 TRP E
+res: 241 THR E   CENTER res: 237 TRP E
+res: 91 ASN E   CENTER res: 237 TRP E
+res: 92 SER E   CENTER res: 237 TRP E
+res: 90 LYS E   CENTER res: 237 TRP E
+res: 103 ILE E   CENTER res: 237 TRP E
+res: 105 LEU E   CENTER res: 237 TRP E
+res: 89 PHE E   CENTER res: 237 TRP E
+res: 104 THR E   CENTER res: 237 TRP E
+patch6
+res: 167 ASN E   CENTER res: 168 CYS E
+res: 163 LEU E   CENTER res: 168 CYS E
+res: 166 THR E   CENTER res: 168 CYS E
+res: 165 ASN E   CENTER res: 168 CYS E
+res: 169 LYS E   CENTER res: 168 CYS E
+res: 168 CYS E   CENTER res: 168 CYS E
+res: 164 SER E   CENTER res: 168 CYS E
+res: 225 PRO E   CENTER res: 168 CYS E
+res: 171 TYR E   CENTER res: 168 CYS E
+res: 170 LYS E   CENTER res: 168 CYS E
+res: 176 ILE E   CENTER res: 168 CYS E
+res: 172 TRP E   CENTER res: 168 CYS E
+res: 182 CYS E   CENTER res: 168 CYS E
+res: 227 VAL E   CENTER res: 168 CYS E
+patch7
+res: 101 ASN E   CENTER res: 94 TYR E
+res: 94 TYR E   CENTER res: 94 TYR E
+res: 93 LYS E   CENTER res: 94 TYR E
+res: 92 SER E   CENTER res: 94 TYR E
+res: 91 ASN E   CENTER res: 94 TYR E
+res: 100 ASN E   CENTER res: 94 TYR E
+res: 95 ASN E   CENTER res: 94 TYR E
+res: 96 SER E   CENTER res: 94 TYR E
+res: 102 ASP E   CENTER res: 94 TYR E
+res: 56 ALA E   CENTER res: 94 TYR E
+res: 90 LYS E   CENTER res: 94 TYR E
+res: 103 ILE E   CENTER res: 94 TYR E
+res: 99 ILE E   CENTER res: 94 TYR E
+res: 57 HIS E   CENTER res: 94 TYR E
+patch8
+res: 131 ALA E   CENTER res: 130 PHE E
+res: 130 PHE E   CENTER res: 130 PHE E
+res: 129 ASP E   CENTER res: 130 PHE E
+res: 134 THR E   CENTER res: 130 PHE E
+res: 162 LEU E   CENTER res: 130 PHE E
+res: 181 ILE E   CENTER res: 130 PHE E
+res: 132 ALA E   CENTER res: 130 PHE E
+res: 230 ARG E   CENTER res: 130 PHE E
+res: 210 VAL E   CENTER res: 130 PHE E
+res: 201 CYS E   CENTER res: 130 PHE E
+res: 203 LYS E   CENTER res: 130 PHE E
+res: 232 THR E   CENTER res: 130 PHE E
+res: 128 ASP E   CENTER res: 130 PHE E
+res: 202 LYS E   CENTER res: 130 PHE E
+res: 208 THR E   CENTER res: 130 PHE E
+res: 124 PRO E   CENTER res: 130 PHE E
+patch9
+res: 72 ASP E   CENTER res: 71 PHE E
+res: 141 TRP E   CENTER res: 71 PHE E
+res: 71 PHE E   CENTER res: 71 PHE E
+res: 70 GLU E   CENTER res: 71 PHE E
+res: 78 GLU E   CENTER res: 71 PHE E
+res: 69 GLY E   CENTER res: 71 PHE E
+res: 155 LEU E   CENTER res: 71 PHE E
+res: 25 GLY E   CENTER res: 71 PHE E
+res: 154 ARG E   CENTER res: 71 PHE E
+res: 73 GLN E   CENTER res: 71 PHE E
+res: 153 ASP E   CENTER res: 71 PHE E
+res: 24 PRO E   CENTER res: 71 PHE E
+res: 23 VAL E   CENTER res: 71 PHE E
+res: 22 ALA E   CENTER res: 71 PHE E
+res: 21 GLU E   CENTER res: 71 PHE E
+patch10
+res: 166 THR E   CENTER res: 165 ASN E
+res: 164 SER E   CENTER res: 165 ASN E
+res: 165 ASN E   CENTER res: 165 ASN E
+res: 163 LEU E   CENTER res: 165 ASN E
+res: 230 ARG E   CENTER res: 165 ASN E
+res: 182 CYS E   CENTER res: 165 ASN E
+res: 176 ILE E   CENTER res: 165 ASN E
+res: 168 CYS E   CENTER res: 165 ASN E
+res: 169 LYS E   CENTER res: 165 ASN E
+res: 167 ASN E   CENTER res: 165 ASN E
+res: 181 ILE E   CENTER res: 165 ASN E
+res: 180 MET E   CENTER res: 165 ASN E
+res: 178 ASP E   CENTER res: 165 ASN E
+res: 177 LYS E   CENTER res: 165 ASN E
+patch11
+res: 65 VAL E   CENTER res: 65 VAL E
+res: 34 GLN E   CENTER res: 65 VAL E
+res: 35 ASP E   CENTER res: 65 VAL E
+res: 85 ILE E   CENTER res: 65 VAL E
+res: 64 ASP E   CENTER res: 65 VAL E
+res: 84 LYS E   CENTER res: 65 VAL E
+res: 83 LEU E   CENTER res: 65 VAL E
+res: 66 VAL E   CENTER res: 65 VAL E
+res: 33 LEU E   CENTER res: 65 VAL E
+res: 67 VAL E   CENTER res: 65 VAL E
+res: 32 SER E   CENTER res: 65 VAL E
+res: 36 LYS E   CENTER res: 65 VAL E
+res: 63 SER E   CENTER res: 65 VAL E
+res: 38 GLY E   CENTER res: 65 VAL E
+res: 82 LYS E   CENTER res: 65 VAL E
+patch12
+res: 61 THR E   CENTER res: 64 ASP E
+res: 64 ASP E   CENTER res: 64 ASP E
+res: 62 THR E   CENTER res: 64 ASP E
+res: 63 SER E   CENTER res: 64 ASP E
+res: 35 ASP E   CENTER res: 64 ASP E
+res: 34 GLN E   CENTER res: 64 ASP E
+res: 65 VAL E   CENTER res: 64 ASP E
+res: 36 LYS E   CENTER res: 64 ASP E
+res: 85 ILE E   CENTER res: 64 ASP E
+res: 84 LYS E   CENTER res: 64 ASP E
+res: 33 LEU E   CENTER res: 64 ASP E
+res: 41 PHE E   CENTER res: 64 ASP E
+res: 60 VAL E   CENTER res: 64 ASP E
+res: 59 GLY E   CENTER res: 64 ASP E
+patch13
+res: 151 THR E   CENTER res: 143 LEU E
+res: 143 LEU E   CENTER res: 143 LEU E
+res: 152 PRO E   CENTER res: 143 LEU E
+res: 192 MET E   CENTER res: 143 LEU E
+res: 191 CYS E   CENTER res: 143 LEU E
+res: 142 GLY E   CENTER res: 143 LEU E
+res: 141 TRP E   CENTER res: 143 LEU E
+res: 150 ASN E   CENTER res: 143 LEU E
+res: 144 THR E   CENTER res: 143 LEU E
+res: 145 ARG E   CENTER res: 143 LEU E
+res: 17 VAL E   CENTER res: 143 LEU E
+res: 16 ILE E   CENTER res: 143 LEU E
+res: 146 TYR E   CENTER res: 143 LEU E
+res: 149 ALA E   CENTER res: 143 LEU E
+patch14
+res: 157 GLN E   CENTER res: 23 VAL E
+res: 23 VAL E   CENTER res: 23 VAL E
+res: 22 ALA E   CENTER res: 23 VAL E
+res: 21 GLU E   CENTER res: 23 VAL E
+res: 9 VAL E   CENTER res: 23 VAL E
+res: 26 SER E   CENTER res: 23 VAL E
+res: 8 PRO E   CENTER res: 23 VAL E
+res: 24 PRO E   CENTER res: 23 VAL E
+res: 71 PHE E   CENTER res: 23 VAL E
+res: 155 LEU E   CENTER res: 23 VAL E
+res: 27 TRP E   CENTER res: 23 VAL E
+res: 25 GLY E   CENTER res: 23 VAL E
+res: 7 GLN E   CENTER res: 23 VAL E
+res: 6 ILE E   CENTER res: 23 VAL E
+patch15
+res: 242 LEU E   CENTER res: 242 LEU E
+res: 241 THR E   CENTER res: 242 LEU E
+res: 239 GLN E   CENTER res: 242 LEU E
+res: 238 VAL E   CENTER res: 242 LEU E
+res: 243 ALA E   CENTER res: 242 LEU E
+res: 240 GLN E   CENTER res: 242 LEU E
+res: 51 TRP E   CENTER res: 242 LEU E
+res: 245 ASN E   CENTER res: 242 LEU E
+res: 244 ALA E   CENTER res: 242 LEU E
+res: 47 ILE E   CENTER res: 242 LEU E
+res: 48 ASN E   CENTER res: 242 LEU E
+res: 105 LEU E   CENTER res: 242 LEU E
+res: 123 LEU E   CENTER res: 242 LEU E
+chain  I: 
+patch1
+res: 25 PHE I   CENTER res: 25 PHE I
+res: 21 ALA I   CENTER res: 25 PHE I
+res: 24 TYR I   CENTER res: 25 PHE I
+res: 23 GLU I   CENTER res: 25 PHE I
+res: 22 ARG I   CENTER res: 25 PHE I
+res: 26 THR I   CENTER res: 25 PHE I
+res: 29 TYR I   CENTER res: 25 PHE I
+res: 28 HIS I   CENTER res: 25 PHE I
+res: 27 LEU I   CENTER res: 25 PHE I
+res: 30 PRO I   CENTER res: 25 PHE I
+res: 36 PHE I   CENTER res: 25 PHE I
+res: 34 VAL I   CENTER res: 25 PHE I
+res: 32 TYR I   CENTER res: 25 PHE I
+res: 13 VAL I   CENTER res: 25 PHE I
+res: 10 PHE I   CENTER res: 25 PHE I
+res: 52 VAL I   CENTER res: 25 PHE I
+res: 67 PRO I   CENTER res: 25 PHE I
+res: 54 VAL I   CENTER res: 25 PHE I
+patch2
+res: 23 GLU I   CENTER res: 24 TYR I
+res: 21 ALA I   CENTER res: 24 TYR I
+res: 20 GLN I   CENTER res: 24 TYR I
+res: 25 PHE I   CENTER res: 24 TYR I
+res: 24 TYR I   CENTER res: 24 TYR I
+res: 22 ARG I   CENTER res: 24 TYR I
+res: 27 LEU I   CENTER res: 24 TYR I
+res: 26 THR I   CENTER res: 24 TYR I
+res: 29 TYR I   CENTER res: 24 TYR I
+res: 28 HIS I   CENTER res: 24 TYR I
+res: 16 LYS I   CENTER res: 24 TYR I
+res: 13 VAL I   CENTER res: 24 TYR I
+res: 12 GLU I   CENTER res: 24 TYR I
+res: 10 PHE I   CENTER res: 24 TYR I
+patch3
+res: 67 PRO I   CENTER res: 10 PHE I
+res: 66 VAL I   CENTER res: 10 PHE I
+res: 10 PHE I   CENTER res: 10 PHE I
+res: 11 PRO I   CENTER res: 10 PHE I
+res: 9 SER I   CENTER res: 10 PHE I
+res: 12 GLU I   CENTER res: 10 PHE I
+res: 13 VAL I   CENTER res: 10 PHE I
+res: 14 VAL I   CENTER res: 10 PHE I
+res: 24 TYR I   CENTER res: 10 PHE I
+res: 25 PHE I   CENTER res: 10 PHE I
+res: 68 HIS I   CENTER res: 10 PHE I
+res: 52 VAL I   CENTER res: 10 PHE I
+res: 29 TYR I   CENTER res: 10 PHE I
+res: 8 LYS I   CENTER res: 10 PHE I
+res: 69 VAL I   CENTER res: 10 PHE I
+res: 32 TYR I   CENTER res: 10 PHE I
+patch4
+res: 32 TYR I   CENTER res: 32 TYR I
+res: 29 TYR I   CENTER res: 32 TYR I
+res: 31 GLN I   CENTER res: 32 TYR I
+res: 30 PRO I   CENTER res: 32 TYR I
+res: 33 ASP I   CENTER res: 32 TYR I
+res: 50 ASN I   CENTER res: 32 TYR I
+res: 34 VAL I   CENTER res: 32 TYR I
+res: 52 VAL I   CENTER res: 32 TYR I
+res: 25 PHE I   CENTER res: 32 TYR I
+res: 51 ARG I   CENTER res: 32 TYR I
+res: 10 PHE I   CENTER res: 32 TYR I
+res: 69 VAL I   CENTER res: 32 TYR I
+res: 49 TYR I   CENTER res: 32 TYR I
+res: 8 LYS I   CENTER res: 32 TYR I
+patch5
+res: 56 TYR I   CENTER res: 56 TYR I
+res: 39 GLU I   CENTER res: 56 TYR I
+res: 38 PRO I   CENTER res: 56 TYR I
+res: 55 PHE I   CENTER res: 56 TYR I
+res: 54 VAL I   CENTER res: 56 TYR I
+res: 37 LEU I   CENTER res: 56 TYR I
+res: 64 ASN I   CENTER res: 56 TYR I
+res: 63 VAL I   CENTER res: 56 TYR I
+res: 65 HIS I   CENTER res: 56 TYR I
+res: 62 VAL I   CENTER res: 56 TYR I
+res: 57 ASN I   CENTER res: 56 TYR I
+res: 58 PRO I   CENTER res: 56 TYR I
+res: 61 ASN I   CENTER res: 56 TYR I
+res: 18 VAL I   CENTER res: 56 TYR I
+res: 36 PHE I   CENTER res: 56 TYR I
+patch6
+res: 25 PHE I   CENTER res: 29 TYR I
+res: 24 TYR I   CENTER res: 29 TYR I
+res: 28 HIS I   CENTER res: 29 TYR I
+res: 27 LEU I   CENTER res: 29 TYR I
+res: 29 TYR I   CENTER res: 29 TYR I
+res: 26 THR I   CENTER res: 29 TYR I
+res: 30 PRO I   CENTER res: 29 TYR I
+res: 32 TYR I   CENTER res: 29 TYR I
+res: 31 GLN I   CENTER res: 29 TYR I
+res: 34 VAL I   CENTER res: 29 TYR I
+res: 10 PHE I   CENTER res: 29 TYR I
+res: 12 GLU I   CENTER res: 29 TYR I
+patch7
+res: 16 LYS I   CENTER res: 21 ALA I
+res: 20 GLN I   CENTER res: 21 ALA I
+res: 19 ASP I   CENTER res: 21 ALA I
+res: 22 ARG I   CENTER res: 21 ALA I
+res: 21 ALA I   CENTER res: 21 ALA I
+res: 18 VAL I   CENTER res: 21 ALA I
+res: 17 THR I   CENTER res: 21 ALA I
+res: 13 VAL I   CENTER res: 21 ALA I
+res: 25 PHE I   CENTER res: 21 ALA I
+res: 24 TYR I   CENTER res: 21 ALA I
+res: 36 PHE I   CENTER res: 21 ALA I
+res: 23 GLU I   CENTER res: 21 ALA I
+res: 63 VAL I   CENTER res: 21 ALA I
+res: 54 VAL I   CENTER res: 21 ALA I
+patch8
+res: 19 ASP I   CENTER res: 22 ARG I
+res: 36 PHE I   CENTER res: 22 ARG I
+res: 21 ALA I   CENTER res: 22 ARG I
+res: 20 GLN I   CENTER res: 22 ARG I
+res: 18 VAL I   CENTER res: 22 ARG I
+res: 23 GLU I   CENTER res: 22 ARG I
+res: 22 ARG I   CENTER res: 22 ARG I
+res: 25 PHE I   CENTER res: 22 ARG I
+res: 24 TYR I   CENTER res: 22 ARG I
+res: 26 THR I   CENTER res: 22 ARG I
+res: 34 VAL I   CENTER res: 22 ARG I
+res: 35 TYR I   CENTER res: 22 ARG I
+patch9
+res: 70 GLY I   CENTER res: 51 ARG I
+res: 51 ARG I   CENTER res: 51 ARG I
+res: 69 VAL I   CENTER res: 51 ARG I
+res: 50 ASN I   CENTER res: 51 ARG I
+res: 49 TYR I   CENTER res: 51 ARG I
+res: 48 ARG I   CENTER res: 51 ARG I
+res: 32 TYR I   CENTER res: 51 ARG I
+res: 52 VAL I   CENTER res: 51 ARG I
+res: 33 ASP I   CENTER res: 51 ARG I
+res: 53 ARG I   CENTER res: 51 ARG I
+res: 35 TYR I   CENTER res: 51 ARG I
+res: 46 ASP I   CENTER res: 51 ARG I
+res: 44 THR I   CENTER res: 51 ARG I
+res: 47 LEU I   CENTER res: 51 ARG I
+patch10
+res: 63 VAL I   CENTER res: 63 VAL I
+res: 62 VAL I   CENTER res: 63 VAL I
+res: 16 LYS I   CENTER res: 63 VAL I
+res: 15 GLY I   CENTER res: 63 VAL I
+res: 56 TYR I   CENTER res: 63 VAL I
+res: 18 VAL I   CENTER res: 63 VAL I
+res: 17 THR I   CENTER res: 63 VAL I
+res: 64 ASN I   CENTER res: 63 VAL I
+res: 55 PHE I   CENTER res: 63 VAL I
+res: 14 VAL I   CENTER res: 63 VAL I
+res: 65 HIS I   CENTER res: 63 VAL I
+res: 13 VAL I   CENTER res: 63 VAL I
+res: 67 PRO I   CENTER res: 63 VAL I
+res: 54 VAL I   CENTER res: 63 VAL I
+res: 36 PHE I   CENTER res: 63 VAL I
+res: 21 ALA I   CENTER res: 63 VAL I
+patch11
+res: 25 PHE I   CENTER res: 26 THR I
+res: 24 TYR I   CENTER res: 26 THR I
+res: 23 GLU I   CENTER res: 26 THR I
+res: 27 LEU I   CENTER res: 26 THR I
+res: 26 THR I   CENTER res: 26 THR I
+res: 22 ARG I   CENTER res: 26 THR I
+res: 29 TYR I   CENTER res: 26 THR I
+res: 30 PRO I   CENTER res: 26 THR I
+res: 28 HIS I   CENTER res: 26 THR I
+patch12
+res: 63 VAL I   CENTER res: 55 PHE I
+res: 65 HIS I   CENTER res: 55 PHE I
+res: 67 PRO I   CENTER res: 55 PHE I
+res: 55 PHE I   CENTER res: 55 PHE I
+res: 54 VAL I   CENTER res: 55 PHE I
+res: 53 ARG I   CENTER res: 55 PHE I
+res: 56 TYR I   CENTER res: 55 PHE I
+res: 39 GLU I   CENTER res: 55 PHE I
+res: 38 PRO I   CENTER res: 55 PHE I
+res: 37 LEU I   CENTER res: 55 PHE I
+res: 64 ASN I   CENTER res: 55 PHE I
+res: 40 GLY I   CENTER res: 55 PHE I
+res: 41 SER I   CENTER res: 55 PHE I
+res: 43 VAL I   CENTER res: 55 PHE I
+patch13
+res: 68 HIS I   CENTER res: 69 VAL I
+res: 8 LYS I   CENTER res: 69 VAL I
+res: 52 VAL I   CENTER res: 69 VAL I
+res: 10 PHE I   CENTER res: 69 VAL I
+res: 69 VAL I   CENTER res: 69 VAL I
+res: 70 GLY I   CENTER res: 69 VAL I
+res: 51 ARG I   CENTER res: 69 VAL I
+res: 49 TYR I   CENTER res: 69 VAL I
+res: 47 LEU I   CENTER res: 69 VAL I
+res: 48 ARG I   CENTER res: 69 VAL I
+res: 32 TYR I   CENTER res: 69 VAL I
+res: 50 ASN I   CENTER res: 69 VAL I
+patch14
+res: 67 PRO I   CENTER res: 67 PRO I
+res: 66 VAL I   CENTER res: 67 PRO I
+res: 65 HIS I   CENTER res: 67 PRO I
+res: 68 HIS I   CENTER res: 67 PRO I
+res: 55 PHE I   CENTER res: 67 PRO I
+res: 54 VAL I   CENTER res: 67 PRO I
+res: 53 ARG I   CENTER res: 67 PRO I
+res: 10 PHE I   CENTER res: 67 PRO I
+res: 52 VAL I   CENTER res: 67 PRO I
+res: 9 SER I   CENTER res: 67 PRO I
+res: 25 PHE I   CENTER res: 67 PRO I
+res: 63 VAL I   CENTER res: 67 PRO I
+res: 13 VAL I   CENTER res: 67 PRO I
+res: 14 VAL I   CENTER res: 67 PRO I
+res: 11 PRO I   CENTER res: 67 PRO I
+patch15
+res: 63 VAL I   CENTER res: 14 VAL I
+res: 14 VAL I   CENTER res: 14 VAL I
+res: 13 VAL I   CENTER res: 14 VAL I
+res: 12 GLU I   CENTER res: 14 VAL I
+res: 11 PRO I   CENTER res: 14 VAL I
+res: 67 PRO I   CENTER res: 14 VAL I
+res: 10 PHE I   CENTER res: 14 VAL I
+res: 15 GLY I   CENTER res: 14 VAL I
+res: 16 LYS I   CENTER res: 14 VAL I
+res: 64 ASN I   CENTER res: 14 VAL I
+res: 65 HIS I   CENTER res: 14 VAL I
+res: 66 VAL I   CENTER res: 14 VAL I
+
 ```
 
-The main output information is stored in the file `OUT.MgO/running_scf.log`, which starts with
-
-```
-                             WELCOME TO ABACUS v3.2
-
-               'Atomic-orbital Based Ab-initio Computation at UStc'
-
-                     Website: http://abacus.ustc.edu.cn/
-
-    Version: Parallel, in development
-    Processor Number is 2
-    Start Time is Mon Oct 24 01:47:54 2022
-
- ------------------------------------------------------------------------------------
-
- READING GENERAL INFORMATION
-                           global_out_dir = OUT.MgO/
-                           global_in_card = INPUT
-                               pseudo_dir =
-                              orbital_dir =
-                                    DRANK = 1
-                                    DSIZE = 2
-                                   DCOLOR = 1
-                                    GRANK = 1
-                                    GSIZE = 1
- The esolver type has been set to : ksdft_lcao
-
-
-
-
- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
- |                                                                    |
- | Reading atom information in unitcell:                              |
- | From the input file and the structure file we know the number of   |
- | different elments in this unitcell, then we list the detail        |
- | information for each element, especially the zeta and polar atomic |
- | orbital number for each element. The total atom number is counted. |
- | We calculate the nearest atom distance for each atom and show the  |
- | Cartesian and Direct coordinates for each atom. We list the file   |
- | address for atomic orbitals. The volume and the lattice vectors    |
- | in real and reciprocal space is also shown.                        |
- |                                                                    |
- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-......
-
-```
-
-If ABAUCS finishes successfully, the total energy will be output in `OUT.MgO/running_scf.log`:
-
-```
- --------------------------------------------
- !FINAL_ETOT_IS -7663.897267807250 eV
- --------------------------------------------
-```
-
-### A quick PW example
-
-In order to run a SCF calculation with PW (Plane Wave) basis set, one has only to change the tag `basis_type` from `lcao` to `pw` in the `INPUT` file, and no longer needs to provide orbital files under `NUMERICAL_ORBITAL` in the `STRU` file.
-
-The `INPUT` file follows as:
-```
-INPUT_PARAMETERS
-suffix                  MgO
-ntype                   2
-pseudo_dir              ./
-ecutwfc                 100             # Rydberg
-scf_thr                 1e-4		# Rydberg
-basis_type              pw              # changes the type of basis set
-calculation             scf		# this is the key parameter telling abacus to do a scf calculation
-```
-
-And the `STRU` file will be:
-
-```
-#This is the atom file containing all the information
-#about the lattice structure.
-
-ATOMIC_SPECIES
-Mg 24.305  Mg_ONCV_PBE-1.0.upf  # element name, atomic mass, pseudopotential file
-O  15.999 O_ONCV_PBE-1.0.upf
-
-LATTICE_CONSTANT
-1.8897259886 		# 1.8897259886 Bohr =  1.0 Angstrom
-
-LATTICE_VECTORS
-4.25648 0.00000 0.00000  
-0.00000 4.25648 0.00000
-0.00000 0.00000 4.25648
-
-ATOMIC_POSITIONS
-Direct                  #Cartesian(Unit is LATTICE_CONSTANT)
-Mg                      #Name of element        
-0.0                     #Magnetic for this element.
-4                       #Number of atoms
-0.0  0.0  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-0.0  0.5  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.5  0.0  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.5  0.5  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-O                       #Name of element        
-0.0                     #Magnetic for this element.
-4                       #Number of atoms
-0.5  0.0  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-0.5  0.5  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.0  0.0  0.5  0 0 0    #x,y,z, move_x, move_y, move_z
-0.0  0.5  0.0  0 0 0    #x,y,z, move_x, move_y, move_z
-```
-
-Use the same pseudopotential and `KPT` files as the above LCAO example. The final total energy will be output:
-
-```
- --------------------------------------------
- !FINAL_ETOT_IS -7665.688319476949 eV
- --------------------------------------------
-```
-
-## Running Geometry Optimization
-
-In order to run a full geometry optimization in ABACUS, the tag `calculation` in `INPUT` should be set to `cell-relax`. In addition, the convergence criteria for atomics force and cell stress can be set through the tags `force_thr_ev` and `stress_thr`, respectively. The maximum number of ionc steps is controlled by `relax_nmax`.
-
-### A quick LCAO example
-
-The `INPUT` is provided as follows:
-
-```
-INPUT_PARAMETERS
-suffix                  MgO
-ntype                   2
-nelec                   0.0
-pseudo_dir              ./
-orbital_dir             ./
-ecutwfc                 100             # Rydberg
-scf_thr                 1e-4		# Rydberg
-basis_type              lcao 
-calculation             cell-relax	# this is the key parameter telling abacus to do a optimization calculation
-force_thr_ev		0.01		# the threshold of the force convergence, in unit of eV/Angstrom
-stress_thr		5		# the threshold of the stress convergence, in unit of kBar
-relax_nmax		100		# the maximal number of ionic iteration steps
-out_stru		1
-```
-Use the same `KPT`, `STRU`, pseudopotential, and orbital files as in the above SCF-LCAO example. The final optimized structure can be found in `STRU_NOW.cif` and `OUT.MgO/running_cell-relax.log`.
-
-### A quick PW example
-
-The `INPUT` is provided as follows:
-
-```
-INPUT_PARAMETERS
-suffix                  MgO
-ntype                   2
-nelec                   0.0
-pseudo_dir              ./
-ecutwfc                 100             # Rydberg
-scf_thr                 1e-4		# Rydberg
-basis_type              pw
-calculation             cell-relax	# this is the key parameter telling abacus to do a optimization calculation
-force_thr_ev		0.01		# the threshold of the force convergence, in unit of eV/Angstrom
-stress_thr		5		# the threshold of the stress convergence, in unit of kBar
-relax_nmax		100		# the maximal number of ionic iteration steps
-out_stru		1
-```
-
-Use the same `KPT`, `STRU`, and pseudopotential files as in the above SCF-PW examples. The final optimized structure can be found in `STRU_NOW.cif` and `OUT.MgO/running_cell-relax.log`.
